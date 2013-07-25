@@ -1,20 +1,35 @@
 class NodesController < ApplicationController
   def create
     # TODO move it
-    if (value = params[:value])
+    kind = params[:kind]
+    case kind
+      when 'constant'
+        node = constant_node
+    end
+    return unless node
+
+    node.kind = kind
+    node.save!
+    render :json => node
+
+  end
+
+  def constant_node
+    if (value = params[:value].to_s)
       case params[:type]
         when 'int'
-          node = IntegerNode.new :integer_value => value
+          if !(value =~ /^[-+]?[0-9]+$/)
+            render :json => {error: "Could not parse integer"},
+                   :status => 422 and return
+          end
+          node = IntegerNode.new :integer_value => value.to_i
         else
           node = Node.new
       end
     else
       node = Node.new
     end
-    node.kind = params[:kind]
-
-    node.save!
-    render :json => node
-
+    node
   end
+
 end

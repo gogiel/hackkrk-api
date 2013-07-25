@@ -1,5 +1,10 @@
 HackkrkApi::Application.routes.draw do
   resource :nodes
+  resources :functions do
+    resources :builtin, :controller => 'functions'
+  end
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
