@@ -1,10 +1,6 @@
 class FunctionNode < Node
   serialize :arguments, Array
 
-  def evaluate
-    value
-  end
-
   def value
     case function.to_s
       when '3'
