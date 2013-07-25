@@ -41,12 +41,20 @@ class NodesController < ApplicationController
           end
           node = IntegerNode.new :integer_value => value.to_i
         when 'bool'
-          if value != true || value != false || value != 'true' || value != 'false'
+          if value != 'true' && value != 'false'
             render :json => {error: "Could not parse boolean"},
                    :status => 422 and return
+          else
+            node = BooleanNode.new :data => {:boolean => (value == 'true' || value == true)}
           end
-        else
-          node = BooleanNode.new :data => {:boolean => (value == 'true' || value == true)}
+        when 'string'
+          if value == 'true' || value == 'false'
+            render :json => {error: "Could not parse string"},
+                   :status => 422 and return
+          else
+            node = StringNode.new :data => {:string => value}
+          end
+
       end
     else
       node = Node.new
