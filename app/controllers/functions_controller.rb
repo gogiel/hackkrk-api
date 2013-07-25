@@ -10,4 +10,8 @@ class FunctionsController < ApplicationController
   def create
     render :json => {body: params[:body], id: 6}
   end
+
+  def lt
+    render :json => {id: 5}
+  end
 end

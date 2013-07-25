@@ -8,6 +8,7 @@ HackkrkApi::Application.routes.draw do
       collection do
         get 'add'
         get 'mult'
+        get 'lt'
     end
   end
   resources :functions

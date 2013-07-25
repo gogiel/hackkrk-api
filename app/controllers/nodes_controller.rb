@@ -7,6 +7,8 @@ class NodesController < ApplicationController
         node = constant_node
       when 'invoke'
         node = invoke_node
+      when 'if'
+        node = if_node
     end
     return unless node
 
@@ -21,7 +23,7 @@ class NodesController < ApplicationController
 
   def evaluate
     render :json => {
-        :result => FunctionNode.find(params[:id]).evaluate
+        :result => Node.find(params[:id]).value
     }
   end
 
@@ -52,4 +54,14 @@ class NodesController < ApplicationController
                      arguments: arguments
   end
 
+  def if_node
+    node = IfNode.new :data => {
+        predicate: params[:predicate],
+        true_branch: params[:true_branch],
+        false_branch: params[:false_branch]
+    }
+
+    # POST /nodes with {"kind":"if","predicate":4,"true_branch":1,"false_branch":2} => 201:
+    #{"kind":"if","predicate":4,"true_branch":1,"false_branch":2,"id":5}
+  end
 end
