@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130725191607) do
+ActiveRecord::Schema.define(version: 20130725192922) do
 
   create_table "nodes", force: true do |t|
     t.string   "kind"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20130725191607) do
     t.text     "function"
     t.text     "data"
     t.text     "bool_value"
+    t.text     "string_value"
   end
 
 end

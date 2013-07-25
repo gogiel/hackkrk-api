@@ -22,9 +22,9 @@ class NodesController < ApplicationController
   end
 
   def evaluate
-    render :json => {
+      render :json => {
         :result => Node.find(params[:id]).value
-    }
+      }
   end
 
   private
@@ -40,11 +40,21 @@ class NodesController < ApplicationController
           node = IntegerNode.new :integer_value => value.to_i
         when 'bool'
           unless value == 'true' || value == 'false'
-            render :json => {error: "Could not parse boolean"}  ,
+            render :json => {error: "Could not parse boolean"},
                     :status => 422 and return
+          end
+          if value == "true"
+            value == true
+          else
+            value == false
           end
           node = BoolNode.new :bool_value => value
         when 'string'
+          if value == 'true' || value == 'false' || value =~ /^[-+]?[0-9]+$/
+            render :json => {error: "Could not parse string"},
+                   :status => 422 and return
+          end
+          node = StringNode.new :string_value => value
         else
           node = Node.new
       end

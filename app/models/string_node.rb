@@ -1,4 +1,4 @@
-class BoolNode < Node
+class StringNode < Node
   def as_json(opts)
     {
         kind: kind,
@@ -9,14 +9,10 @@ class BoolNode < Node
   end
 
   def type_name
-    'bool'
+    'string'
   end
 
   def value
-    if bool_value == "true"
-      true
-    else
-      false
-    end
+    string_value
   end
 end
