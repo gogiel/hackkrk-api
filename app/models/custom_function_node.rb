@@ -12,7 +12,13 @@ class CustomFunctionNode < Node
     }
   end
 
-  def value
-    Node.find(body).value
+  def value(custom_arguments = nil)
+    node = Node.find(body)
+    if node.is_a?(FunctionNode) && node.has_custom_arguments?
+      node.value(custom_arguments)
+    else
+      node.value
+    end
   end
+
 end

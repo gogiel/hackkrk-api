@@ -9,6 +9,8 @@ class NodesController < ApplicationController
         node = invoke_node
       when 'if'
         node = if_node
+      when 'argument'
+        node = argument_node
     end
     return unless node
 
@@ -38,8 +40,13 @@ class NodesController < ApplicationController
                    :status => 422 and return
           end
           node = IntegerNode.new :integer_value => value.to_i
+        when 'bool'
+          if value != true || value != false || value != 'true' || value != 'false'
+            render :json => {error: "Could not parse boolean"},
+                   :status => 422 and return
+          end
         else
-          node = Node.new
+          node = BooleanNode.new :data => {:boolean => (value == 'true' || value == true)}
       end
     else
       node = Node.new
@@ -55,13 +62,16 @@ class NodesController < ApplicationController
   end
 
   def if_node
-    node = IfNode.new :data => {
+    IfNode.new :data => {
         predicate: params[:predicate],
         true_branch: params[:true_branch],
         false_branch: params[:false_branch]
     }
+  end
 
-    # POST /nodes with {"kind":"if","predicate":4,"true_branch":1,"false_branch":2} => 201:
-    #{"kind":"if","predicate":4,"true_branch":1,"false_branch":2,"id":5}
+  def argument_node
+    ArgumentNode.new :data => {
+        argument: params[:argument]
+    }
   end
 end
