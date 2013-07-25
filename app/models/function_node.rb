@@ -10,6 +10,9 @@ class FunctionNode < Node
       when '5'
         a, b= arguments.map{|id| Node.find(id).value}
         a < b
+      else
+        node = CustomFunctionNode.find(function)
+        node.value
     end
   end
 

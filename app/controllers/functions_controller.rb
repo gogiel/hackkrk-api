@@ -1,13 +1,7 @@
 class FunctionsController < ApplicationController
-  def add
-    render :json => {id: 3}
-  end
+  def create
+    node = CustomFunctionNode.create! :data => {:body => params[:body]}
 
-  def mult
-    render :json => {id: 4}
-  end
-
-  def lt
-    render :json => {id: 5}
+    render json: node, status: 201
   end
 end
