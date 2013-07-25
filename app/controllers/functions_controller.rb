@@ -6,4 +6,8 @@ class FunctionsController < ApplicationController
   def mult
     render :json => {id: 4}
   end
+
+  def create
+    render :json => {body: params[:body], id: 6}
+  end
 end

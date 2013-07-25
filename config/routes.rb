@@ -10,6 +10,7 @@ HackkrkApi::Application.routes.draw do
         get 'mult'
     end
   end
+  resources :functions
 
 
   # The priority is based upon order of creation: first created -> highest priority.
