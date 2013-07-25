@@ -3,12 +3,16 @@ class IntegerNode < Node
     {
         kind: kind,
         type:type_name,
-        value:integer_value,
+        value:value,
         id:id
     }
   end
 
   def type_name
     'int'
+  end
+
+  def value
+    integer_value
   end
 end

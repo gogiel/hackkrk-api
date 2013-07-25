@@ -5,6 +5,8 @@ class NodesController < ApplicationController
     case kind
       when 'constant'
         node = constant_node
+      when 'invoke'
+        node = invoke_node
     end
     return unless node
 
@@ -16,6 +18,14 @@ class NodesController < ApplicationController
   def show
     render :json => Node.find(params[:id])
   end
+
+  def evaluate
+    render :json => {
+        :result => FunctionNode.find(params[:id]).evaluate
+    }
+  end
+
+  private
 
   def constant_node
     if (value = params[:value].to_s)
@@ -33,6 +43,13 @@ class NodesController < ApplicationController
       node = Node.new
     end
     node
+  end
+
+  def invoke_node
+    arguments = params[:arguments]
+    arguments = JSON.parse(arguments) if arguments.is_a?(String)
+    FunctionNode.new function: params[:function],
+                     arguments: arguments
   end
 
 end

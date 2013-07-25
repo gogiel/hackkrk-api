@@ -1,7 +1,14 @@
 HackkrkApi::Application.routes.draw do
-  resources :nodes
-  resources :functions do
-    resources :builtin, :controller => 'functions'
+  resources :nodes do
+    member do
+      get 'evaluate'
+    end
+  end
+  resources :builtin, :controller => 'functions', :path => 'functions/builtin' do
+      collection do
+        get 'add'
+        get 'mult'
+    end
   end
 
 
