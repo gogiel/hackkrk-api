@@ -11,6 +11,9 @@ class FunctionNode < Node
         arguments.map{|id| Node.find(id).value}.inject(:+)
       when '4'
         arguments.map{|id| Node.find(id).value}.inject(:*)
+      when '5'
+        a, b= arguments.map{|id| Node.find(id).value}
+        a < b
     end
   end
 
