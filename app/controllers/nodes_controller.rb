@@ -38,6 +38,13 @@ class NodesController < ApplicationController
                    :status => 422 and return
           end
           node = IntegerNode.new :integer_value => value.to_i
+        when 'bool'
+          unless value == 'true' || value == 'false'
+            render :json => {error: "Could not parse boolean"}  ,
+                    :status => 422 and return
+          end
+          node = BoolNode.new :bool_value => value
+        when 'string'
         else
           node = Node.new
       end
