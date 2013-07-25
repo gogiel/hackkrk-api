@@ -10,8 +10,11 @@ class NodesController < ApplicationController
 
     node.kind = kind
     node.save!
-    render :json => node
+    render :json => node, :status => 201
+  end
 
+  def show
+    render :json => Node.find(params[:id])
   end
 
   def constant_node

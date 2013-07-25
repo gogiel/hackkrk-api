@@ -1,5 +1,5 @@
 HackkrkApi::Application.routes.draw do
-  resource :nodes
+  resources :nodes
   resources :functions do
     resources :builtin, :controller => 'functions'
   end
